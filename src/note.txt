@@ -1,0 +1,287 @@
+
+
+===================================================================================================================================================
+0. 샘플
+if(     == 0){
+    return 0;
+    return null;
+    return false;
+}
+
+// length가 0이나 1이면 -1 return
+        if(arr.length <= 1){
+            return new int[] {-1};
+        }
+
+
+
+System.out.println("a  : " + a);
+===================================================================================================================================================
+
+1. 숫자 <-> 문자 변환
+int number = 10;
+String s1 = String.valueOf( number );
+String s2 = Integer.ToString( number );
+
+Integer i = new Integer( number );
+String s3 = i.toString();
+
+===================================================================================================================================================
+
+2. N진수 변환
+String s4 = Integer.toBinaryString( number );   //  2진법
+String s5 = Integer.toOctalString( number );    //  8진법
+String s6 = Integer.toHexString( number );      // 16진법
+
+String s7 = Integer.toString( number, N );        // N진수
+
+===================================================================================================================================================
+
+3. 리스트 <-> 배열
+
+1) ArrayList -> String[]  (리스트 -> 배열)
+ArrayList<String> al = new ArrayList<>();
+al.add( "A" );
+al.add( "B" );
+al.add( "C" );
+
+String[] array = al.toArray( new String[ al.size() ] );
+
+
+2) String[] -> ArrayList (배열  -> 리스트)
+String[] array = new String[3];
+array[0] = "A";
+array[1] = "B";
+array[2] = "C";
+
+ArrayList<String> al = new ArrayList<>( Arrays.asList( array ) );
+
+===================================================================================================================================================
+
+4. 이터레이터( 반복자 )
+자바 컬렉션에 저장되어 있는 요소들을 읽어오는 이터페이스 방식 중 하나
+iterator() 함수를 호출하면 객체 반환
+
+iterator method
+1) hasNext()    : 다음 요소가 있는 지 확인 하는 메소드 있으면 true  없으면 false
+2) next()       : 다음 요소를 가져온다.
+3) remove()     : next()로 읽어온 요소를 삭제
+
+void sample()
+{
+    List list = new ArrayList();
+    list.add( "1" );
+    list.add( "2" );
+    list.add( "3" );
+    list.add( "4" );
+
+    Iterator<String> iter = list.iterator();
+
+    while( iter.hasNext() )
+    {
+        String str = iter.next();
+        System.out.println( str );
+    }
+}
+
+===================================================================================================================================================
+
+5. String[] 에 특정 문자 찾기
+package com.taesu.example;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class StringArrayExample1 {
+
+    public static void main(String[] args) {
+
+        String[] alphabet = new String[]{"A", "B", "C"};
+
+        // Convert String Array to List
+        List<String> list = Arrays.asList(alphabet);
+
+        if(list.contains("A")){
+            System.out.println("리스트에서 A찾기");
+        }
+
+    }
+}
+
+===================================================================================================================================================
+
+6. 중복을 제거해서 오름차순 정렬
+- SET에 담아서, ArrayList에 담은뒤, Collections.sort
+
+        Set<Integer> set = new HashSet();
+        set.add(1);
+        set.add(2);
+        set.add(3);
+        set.add(2);
+
+        List list = new ArrayList(set);		// ArrayList에 Set 담기
+        Collections.sort(list);
+
+        int sum = 0;
+        for(Object i : list){
+            sum += (int)i;
+        }
+
+        System.out.println(sum);
+
+===================================================================================================================================================
+
+7. List to Set / Set to List
+1) 선언시
+// set에 list 담기
+ArrayList<String> arrayList = new ArrayList<>();
+Set<String> set = new Set<>(arrayList);
+
+// list에 set 담기
+Set<String> set = new Set<>();
+ArrayList<String> arrayList = new ArrayList<>(set);
+
+2) addAll()
+// set에 list 담기
+ArrayList<String> arrayList = new ArrayList<>();
+Set<String> set = new Set<>();
+set.addAll(arrayList);
+
+// list에 set 담기
+Set<String> set = new Set<>();
+ArrayList<String> arrayList = new ArrayList<>();
+arrayList.addAll(set);
+
+===================================================================================================================================================
+
+8. 맵 차이
+HashMap
+    순서 상관 없는 키 밸류 쌍 처리
+
+LinkedHashMap
+    입력된 순서
+
+TreeMap
+    키 값으로 정렬된 순서
+
+===================================================================================================================================================
+
+9. substring / split
+https://coding-factory.tistory.com/126
+
+1) substring
+String.substring(start) //문자열  start위치부터 끝까지 문자열 자르기
+String.substring(start,end) //문자열  start위치 부터 end전까지 문자열 발췌
+
+2) split
+문자열배열 = 대상문자열.split("기준문자");
+
+===================================================================================================================================================
+
+10. String -> char[]로 쪼개기
+
+String text = "hello world";
+char[] ch = new char[text.length()];
+for(int i=0; i<text.length(); i++){
+     ch[i] = text.charAt(i);
+}
+
+또는 char[] ch = text.toCharArray();
+
+===================================================================================================================================================
+
+11. indexOf (문자) : 해당 문자가 들어있는 위치를 알려줌 (문자없으면 -1 return)
+     lastIndexOf (문자) : 해당 문자가 들어있는 위치를 뒤에서부터 알려줌
+예) "abcde".indexOf("e") -> return : 4
+예) "abcdedaef".lastIndexOf("e") -> return : 7
+
+===================================================================================================================================================
+
+12. stack / queue
+https://korbillgates.tistory.com/122
+
+===================================================================================================================================================
+
+13. 문자열 공백제거
+.trim():
+문자열 앞뒤에 있는 공백을 제거해준다. (중간은 제외)
+값을 입력받는다거나 할 때 공백이 있으면 오류가 나는 경우가 있는데 실수를 사전에 방지해줄 수 있다.
+String text = "hello world ";
+System.out.print(text.trim());
+>> 결과 : hello world(뒤에 공백이 제거되는거지, 문자열 사이의 공백은 제거되지 않음)
+
+===================================================================================================================================================
+
+14. 문자열 함수 정리된 곳
+https://kutar37.tistory.com/entry/%EC%9E%90%EB%B0%94-String-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%9D%98-%EB%A9%94%EC%86%8C%EB%93%9C
+
+===================================================================================================================================================
+
+15. map에 담긴 key, value 전부 뽑기
+Map<String, String> map = new HashMap<>();
+
+map.put("Key1", "Value1");
+map.put("Key2", "Value2");
+map.put("Key3", "Value3");
+
+#1) iterator
+Iterator<String> iter = map.keySet().iterator();
+while(iter.hasNext()) {
+    String key = iter.next();
+    System.out.println(" -- " + key + ", " + map.get(key));
+}
+
+#2) for문
+for(String key : map.keySet()) {
+     System.out.println(" -- " + key + ", " + map.get(key));
+}
+
+===================================================================================================================================================
+
+16. 리스트에 값이 있는지 확인 : contains
+listA.contains("홍길동") >> 있는 index 노출
+
+===================================================================================================================================================
+
+17. 자바 배열 (2차원, 다차원, 가변 배열 초기화 및 사용방법)
+https://blog.itthis.me/47
+
+===================================================================================================================================================
+
+18. 자바 컬렉션 프레임워크(Java Collection Framework) 정리
+https://gbsb.tistory.com/247
+
+===================================================================================================================================================
+
+19. collection을 활용한 포함된 것의 빈도 확인 (java.util.Collections.frequency() Method)
+https://www.tutorialspoint.com/java/util/collections_frequency.htm
+
+===================================================================================================================================================
+
+20.   list.add(0);
+      list.add(1);
+      list.add(3);
+      list.add(5);
+      list.add(7);
+
+    list.remove(3) : 3번째 인덱스 값을 list에서 삭제
+    list.remove((Integer)3) : remove에서 3 값 자체가 삭제
+
+https://taeil00.tistory.com/238
+
+===================================================================================================================================================
+21. Collection (컬렉션)
+
+int max = (int) Collections.max(arrayList);         // 최대값
+int min = (int) Collections.min(arrayList);         // 최소값
+int index = arrayList.indexOf(min);                 // 최소값 인덱스
+
+arrayList.remove(index);                            // arrayList에서 최소값 인덱스 위치 값 제거
+
+
+
+오름차순 : Collections.sort( arrayList );
+내림차순 : Collections.sort( arrayList, Collections.reverseOrder() );
+역순 : Collections.reverse( arrayList );
+
+
