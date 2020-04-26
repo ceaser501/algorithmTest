@@ -2,7 +2,7 @@ import java.util.*;
 
 public class cote_11st_3 {
 
-    public static void main(String args[]){
+    public static void main(String[] args){
 
         int N = 5;      // 길이
         int K = 2;      // 문자구성
@@ -11,156 +11,51 @@ public class cote_11st_3 {
     }
 
     public static String solution(int N, int K) {
-        Random rnd = new Random();
-        StringBuilder result = new StringBuilder();
+//        Random rnd = new Random();  // 굳이 상단에 표현할 필요가 없음;
+//        StringBuilder result = new StringBuilder();  // 굳이 상단에 표현할 필요가 없음;
 
         // 예외상황 처리 >> K가 1 일 때
         if(K == 0) {
             return null;
         }else if(K == 1){
-            for(int i=0; i<N; i++){
-                result.append("a");
-            }
-
-            return result.toString();
-        }
-
+            return new String(new char[N]).replace("\0", "a");
+        }else
         // 예외상황 처리 >> 길이가 홀수 일 때와 짝수 일 때
         if((N%2 == 0 && (N/2 < K)) || N%2 != 0 && (N/2+1 < K)){
             return null;
         }
 
-        String[] textSet = new String[N];
-        for(int i=0; i<K; i++){
-            String randomStr = String.valueOf((char) ((int) (rnd.nextInt(26)) + 97));   // 랜덤 영소문자 생성
+//        String[] textSet = new String[N];
+        Random rnd = new Random();
+        Set<Character> set = new HashSet<>();
+        Set<Integer> index = new HashSet<>();
+        while(set.size() < K){
+//            List<String> list = Arrays.asList(textSet);  // FAULT: 왜 매번 Arrays.asList 를 해야만 했는가?
+            set.add((char) (rnd.nextInt(26) + 97));
+            index.add(rnd.nextInt(N/2));
+        }
+        while(index.size() <  K) {
+            index.add(rnd.nextInt(N/2));
+        }
+        Character[] setArray = set.toArray(new Character[K]);
+        Integer[] indexArray = index.toArray(new Integer[K]);
 
-            // 동일한 값이 있는지 체크 >> 없으면 넣는다 (문자 구성이 달라질 수 있으므로..)
-            List<String> list = Arrays.asList(textSet);
-            if(!list.contains(randomStr)){
-                textSet[i] = randomStr;
-            }
+        StringBuilder text = new StringBuilder();
+        for(int i = 0; i< N/2; i++){                // 랜덤 index가 1부터 돌려서, 결과 StringBuilder 에 중간 전 지점까지 넣는다
+            text.append(setArray[rnd.nextInt(K)]);
         }
 
-        int halfIndex = N/2;
-
-        StringBuilder builder = new StringBuilder();
-
-        for(int i=1; i<=halfIndex; i++){                // 랜덤 index가 1부터 돌려서, 결과 StringBuilider 에 중간 전 지점까지 넣는다
-            if(i >= K){
-                builder.append(textSet[i-K]);
-                result.append(textSet[i-K]);
-            }else{
-                builder.append(textSet[i]);
-                result.append(textSet[i]);
-            }
+        for(int i = 0; i< indexArray.length; i++){
+            text.setCharAt(indexArray[i], setArray[i]);
         }
 
-        if(N%2 != 0)
-            result.append(textSet[0]);                 // 중간지점 추가 (홀수 일 때)
-
-        String[] str = builder.toString().split("");
-        ArrayList<String> arrayList = new ArrayList(Arrays.asList(str));
-
-        Collections.reverse(arrayList);                 // 0~중간전 인덱스까지를 역순정렬
-
-        for(int i=0; i<arrayList.size(); i++){          // 0 ~ 중간 ~ 역순정렬 String을 합쳐줌
-            result.append(arrayList.get(i));
+        StringBuilder result = new StringBuilder(text);
+        if(N%2 != 0) {
+            result.append(setArray[rnd.nextInt(K)]);                 // 중간지점 추가 (홀수 일 때)
         }
+        text.reverse();
+        result.append(text);
 
         return result.toString();
     }
 }
-
-
-
-
-
-//
-//        Random rnd = new Random();
-//
-//        String[] resultArray = new String[N];
-//        String[] textSet = new String[N];
-//        // 랜덤 영소문자 생성
-//        for(int i=0; i<K; i++){
-//            textSet[i] = String.valueOf((char) ((int) (rnd.nextInt(26)) + 97));   // 2개 a b , 3개 a b c
-//        }
-//
-//
-//        System.out.println((N/2)-1);
-//        for(int j=0; j<(N/2)-1; j++){
-//            resultArray[j] = textSet[j];
-//        }
-//
-//
-//        for(int j=0; j<(N/2)-1; j++){
-//            System.out.println(resultArray[j]);
-//        }
-//
-//
-//
-//        return str;
-//    }
-//}
-
-
-//
-//
-//if(     == 0){
-//        return 0;
-//        return null;
-//        return false;
-//        }
-//
-//// length가 0이나 1이면 -1 return
-//        if(arr.length <= 1){
-//        return new int[] {-1};
-//        }
-//
-//
-//
-//        System.out.println("a  : " + a);
-//
-
-
-
-
-
-
-
-
-//
-//    int half = N/2;
-//    char ch = 'a';
-//    char[] buffer = new char[N];
-//
-//
-//        if( N % 2 == 0) {
-//                int diff = half - K;
-//                for(int i=0; i<half; ++i) {
-//        buffer[i] = ch;
-//        buffer[N-i-1] = ch;
-//
-//        if(i<diff)
-//        continue;
-//        ++ch;
-//        }
-//        }else {
-//        int diff = half - K;
-//        for(int i=0; i<half; ++i) {
-//        buffer[i] = ch;
-//        buffer[N-i-1] = ch;
-//
-//        if(i<diff)
-//        continue;
-//        ++ch;
-//        }
-//        --ch;
-//        buffer[half] = ch;
-//        }
-//
-//        StringBuilder builder = new StringBuilder();
-//        for(int j=0; j<buffer.length; j++){
-//        builder.append(buffer[j]);
-//        }
-
-//return builder.toString();
